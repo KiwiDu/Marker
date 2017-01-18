@@ -1,13 +1,17 @@
-package Nodes;
+package BasicNode;
 
-import java.util.*;
+import Utils.Index;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedHashMap;
 
 /**
  * This is Marker,
  * which was created by kiwid on 2017/1/11.
  * All rights reserved.
  */
-public class ParentNode implements Node, Node.Texts, Node.Container {
+public class ParentNode implements Node {
     private LinkedHashMap<Index, Node> children;
     private Tags tag;
 
@@ -40,12 +44,9 @@ public class ParentNode implements Node, Node.Texts, Node.Container {
         return tag;
     }
 
-    public boolean hasChild() {
+    @Override
+    public boolean canContain(Tags t) {
         return true;
-    }
-
-    public Set<Node> getChildrenSet() {
-        return new HashSet<>(children.values());
     }
 
     public String toString() {

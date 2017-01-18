@@ -1,6 +1,6 @@
 package main;
 
-import Nodes.Tags;
+import BasicNode.Tags;
 
 import java.util.HashMap;
 import java.util.regex.Pattern;
@@ -15,17 +15,17 @@ public class Dict {
 
     static {
         blockDict = new HashMap<>(32);
-        item(Tags.blockqutoe, "([>][ ])([^ ]*)");
-        item(Tags.h1, "([#][ ])([^ ]*)");
-        item(Tags.h2, "([#]{2}[ ])([^ ]*)");
-        item(Tags.h3, "([#]{3}[ ])([^ ]*)");
-        item(Tags.h4, "([#]{4}[ ])([^ ]*)");
-        item(Tags.h5, "([#]{5}[ ])([^ ]*)");
-        item(Tags.h6, "([#]{6}[ ])([^ ]*)");
-        item(Tags.ul, "([*][ ])([^ ]*)");
-        item(Tags.ol, "(\\d{1,}[.][ ])([^ ]*)");
-        item(Tags.br, "([ ]{2,})()");
-        item(Tags.hr, "([*-=]{3,})()");
+        item(Tags.blockqutoe, "(?:[>][ ])([^ ]*)");
+        item(Tags.h1, "(?:[#][ ])([^ ]*)");
+        item(Tags.h2, "(?:[#]{2}[ ])([^ ]*)");
+        item(Tags.h3, "(?:[#]{3}[ ])([^ ]*)");
+        item(Tags.h4, "(?:[#]{4}[ ])([^ ]*)");
+        item(Tags.h5, "(?:[#]{5}[ ])([^ ]*)");
+        item(Tags.h6, "(?:[#]{6}[ ])([^ ]*)");
+        item(Tags.li, "(?:[*][ ])([^ ]*)");
+        item(Tags.li, "(?:\\d{1,}[.][ ])([^ ]*)");
+        item(Tags.br, "(?:[ ]{3,})()");
+        item(Tags.hr, "(?:[*-=]{3,})()");
     }
 
     private static void item(Tags t, String pat) {

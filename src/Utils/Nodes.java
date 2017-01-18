@@ -5,7 +5,7 @@ package Utils;
  * All rights reserved.
  */
 
-import Nodes.ParentNode;
+import BasicNode.ParentNode;
 
 public class Nodes {
     public static ParentNode headerOf(int level) {

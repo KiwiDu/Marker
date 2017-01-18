@@ -1,13 +1,13 @@
-package Nodes;
+package BasicNode;
 
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * This is Marker,
  * which was created by kiwid on 2017/1/11.
  * All rights reserved.
  */
-public class TextNode implements Node, Node.Texts {
+public final class TextNode implements Node {
     private StringBuilder content;
 
     private TextNode(String con) {
@@ -29,11 +29,23 @@ public class TextNode implements Node, Node.Texts {
         return Tags.TEXT;
     }
 
-    public boolean hasChild() {
-        return true;
+    @Override
+    public boolean canContain(Tags t) {
+        return false;
     }
 
-    public Set<Node> getChildrenSet() {
+    @Override
+    public Node appendChild(Node n) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Node appendChildren(Node... c) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Node appendChildren(Collection<Node> c) {
         throw new UnsupportedOperationException();
     }
 
