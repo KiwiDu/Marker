@@ -1,42 +1,49 @@
 package Nodes;
 
 import java.util.Set;
+
 /**
- * Created by kiwid on 2017/1/11.
+ * This is Marker,
+ * which was created by kiwid on 2017/1/11.
+ * All rights reserved.
  */
-public class TextNode implements Node,Texts{
+public class TextNode implements Node, Node.Texts {
     private StringBuilder content;
+
     private TextNode(String con) {
-        content=new StringBuilder(con);
+        content = new StringBuilder(con);
     }
-    private static final int BLANKLENGTH;
-    private static final String BLANK;
-    static {
-        BLANKLENGTH=16;
-        BLANK = "                ";
-        assert BLANK.length()==BLANKLENGTH;
-    }
-    public String inner(){
-        return content.toString();
-    }
-    public boolean hasChild(){
-        return true;
-    }
-    public Set<Node> getChildren(){
-        throw new UnsupportedOperationException();
-    }
-    public static Node of(String id){
-        if(id==null){
-            id=BLANK;
-        }
+
+    public static TextNode of(String id) {
+        id = id == null ? "" : id;
         return new TextNode(id);
     }
-    public String toString(){
+
+    @Override
+    public String inner() {
+        return content.toString();
+    }
+
+    @Override
+    public Tags getTag() {
+        return Tags.TEXT;
+    }
+
+    public boolean hasChild() {
+        return true;
+    }
+
+    public Set<Node> getChildrenSet() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String toString() {
         return inner();
     }
 
     @Override
-    public Node appendText(String txt) {
+    public TextNode appendText(String txt) {
         content.append(txt);
         return this;
     }

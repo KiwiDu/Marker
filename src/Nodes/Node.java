@@ -1,13 +1,38 @@
 package Nodes;
+
+import java.util.Collection;
 import java.util.Set;
+
 /**
- * Created by kiwid on 2017/1/11.
+ * This is Marker,
+ * which was created by kiwid on 2017/1/11.
+ * All rights reserved.
  */
 public interface Node {
+    @SuppressWarnings("unused")
+    static Node of(String id) {
+        throw new RuntimeException("No expected implementation was found", new NullPointerException());
+    }
+
     String inner();
+
+    Tags getTag();
+
+    @SuppressWarnings("unused")
     boolean hasChild();
-    Set<Node> getChildren();
-    static Node of(String id){
-        throw new RuntimeException("No expected implemention was found",new NullPointerException());
+
+    @SuppressWarnings("unused")
+    Set<Node> getChildrenSet();
+
+    interface Container extends Node {
+        Container appendChild(Node n);
+
+        Container appendChildren(Node... c);
+
+        Container appendChildren(Collection<Node> c);
+    }
+
+    interface Texts extends Node {
+        Texts appendText(String txt);
     }
 }

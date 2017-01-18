@@ -3,12 +3,15 @@ package Nodes;
 import java.util.Arrays;
 
 /**
- * Created by kiwid on 2017/1/12.
+ * This is Marker,
+ * which was created by kiwid on 2017/1/12.
+ * All rights reserved.
  */
 class Index {
-    static IndexPool pool;
+    private static IndexPool pool;
+
     static {
-        pool=new IndexPool();
+        pool = new IndexPool();
     }
 
     private final int i;
@@ -25,20 +28,22 @@ class Index {
         return i;
     }
 
-    public static class IndexPool {
+    private static class IndexPool {
         static Index[] indexes;
+
         static {
-            indexes=new Index[256];
+            indexes = new Index[256];
         }
-        public Index getRef(int n){
-            if(n<0){
+
+        Index getRef(int n) {
+            if (n < 0) {
                 throw new IndexOutOfBoundsException();
             }
-            if(indexes.length < n){
-                indexes= Arrays.copyOfRange(indexes,0,n);//expand the array if needed.
+            if (indexes.length < n) {
+                indexes = Arrays.copyOfRange(indexes, 0, n + 16);//expand the array if needed.
             }
-            if(indexes[n]==null){
-                indexes[n]= new Index(n);
+            if (indexes[n] == null) {
+                indexes[n] = new Index(n);
             }
             return indexes[n];
         }

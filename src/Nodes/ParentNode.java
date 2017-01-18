@@ -1,53 +1,83 @@
 package Nodes;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
- * Created by kiwid on 2017/1/11.
+ * This is Marker,
+ * which was created by kiwid on 2017/1/11.
+ * All rights reserved.
  */
-public class ParentNode implements Node,Texts,Container{
-    private HashMap<Index,Node> children;
+public class ParentNode implements Node, Node.Texts, Node.Container {
+    private LinkedHashMap<Index, Node> children;
     private Tags tag;
+
     {
-        children=new HashMap<Index,Node>(32,0.9f);
+        children = new LinkedHashMap<>(32, 0.9f);
     }
+
     private ParentNode(Tags tag) {
-        this.tag=tag;
+        this.tag = tag;
     }
-    public static Node of(Tags tag){
+
+    public static ParentNode of(Tags tag) {
         return new ParentNode(tag);
     }
-    public String inner(){
-        StringBuilder ret=new StringBuilder(64);
-        for(Node n:children.values()){
+
+    public static ParentNode of(String id) {
+        return of(Tags.valueOf(id));
+    }
+
+    public String inner() {
+        StringBuilder ret = new StringBuilder(64);
+        for (Node n : children.values()) {
             ret.append(n.toString());
         }
         return ret.toString();
     }
-    public boolean hasChild(){
+
+    @Override
+    public Tags getTag() {
+        return tag;
+    }
+
+    public boolean hasChild() {
         return true;
     }
-    public Set<Node> getChildren(){
-        return new HashSet<Node>(children.values());
+
+    public Set<Node> getChildrenSet() {
+        return new HashSet<>(children.values());
     }
-    public static Node of(String id){
-        return of(Tags.valueOf(id));
-    }
-    public String toString(){
-        return String.format("<%1s>$2s</%1s>",tag,inner());
+
+    public String toString() {
+        return String.format("<%1$s>%2$s</%1$s>", tag, inner());
     }
 
     @Override
-    public Node appendText(String txt) {
-        this.appendChild(TextNode.of(txt));
+    public ParentNode appendText(String txt) {
+        Node n = children.get(Index.of(children.size()));
+        if (n instanceof TextNode) {
+            ((TextNode) n).appendText(txt);
+        } else {
+            this.appendChild(TextNode.of(txt));
+        }
         return this;
     }
 
     @Override
-    public Node appendChild(Node n) {
-        children.put(Index.of(children.size()),n);
+    public ParentNode appendChild(Node n) {
+        children.put(Index.of(children.size()), n);
+        return this;
+    }
+
+    @Override
+    public ParentNode appendChildren(Collection<Node> c) {
+        c.forEach(this::appendChild);
+        return this;
+    }
+
+    @Override
+    public ParentNode appendChildren(Node... c) {
+        Arrays.stream(c).forEach(this::appendChild);
         return this;
     }
 }
