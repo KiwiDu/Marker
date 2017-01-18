@@ -12,27 +12,38 @@ import java.util.regex.Pattern;
  */
 public class Dict {
     private static HashMap<Pattern, Tags> blockDict;
+    private static HashMap<Pattern, Tags> inlineDict;
 
     static {
         blockDict = new HashMap<>(32);
-        item(Tags.blockqutoe, "(?:[>][ ])([^ ]*)");
-        item(Tags.h1, "(?:[#][ ])([^ ]*)");
-        item(Tags.h2, "(?:[#]{2}[ ])([^ ]*)");
-        item(Tags.h3, "(?:[#]{3}[ ])([^ ]*)");
-        item(Tags.h4, "(?:[#]{4}[ ])([^ ]*)");
-        item(Tags.h5, "(?:[#]{5}[ ])([^ ]*)");
-        item(Tags.h6, "(?:[#]{6}[ ])([^ ]*)");
-        item(Tags.li, "(?:[*][ ])([^ ]*)");
-        item(Tags.li, "(?:\\d{1,}[.][ ])([^ ]*)");
-        item(Tags.br, "(?:[ ]{3,})()");
-        item(Tags.hr, "(?:[*-=]{3,})()");
+        inlineDict = new HashMap<>(32);
+        //blocks
+        block(Tags.blockqutoe, "(?:[>][ ])([^ ]*)");
+        block(Tags.h1, "(?:[#][ ])([^ ]*)");
+        block(Tags.h2, "(?:[#]{2}[ ])([^ ]*)");
+        block(Tags.h3, "(?:[#]{3}[ ])([^ ]*)");
+        block(Tags.h4, "(?:[#]{4}[ ])([^ ]*)");
+        block(Tags.h5, "(?:[#]{5}[ ])([^ ]*)");
+        block(Tags.h6, "(?:[#]{6}[ ])([^ ]*)");
+        block(Tags.li, "(?:[*][ ])([^ ]*)");
+        block(Tags.li, "(?:\\d{1,}[.][ ])([^ ]*)");
+        block(Tags.br, "(?:[ ]{3,})()");
+        block(Tags.hr, "(?:[*-=]{3,})()");
+        //inlines
+
     }
 
-    private static void item(Tags t, String pat) {
+    private static void block(Tags t, String pat) {
         blockDict.put(Pattern.compile(pat), t);
+    }
+    private static void inline(Tags t, String pat) {
+        inlineDict.put(Pattern.compile(pat), t);
     }
 
     public static HashMap<Pattern, Tags> getBlockDict() {
         return blockDict;
+    }
+    public static HashMap<Pattern, Tags> getInlineDict() {
+        return inlineDict;
     }
 }
