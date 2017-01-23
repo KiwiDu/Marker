@@ -1,6 +1,7 @@
 package BasicNode;
 
-import java.util.Collection;
+import Rendering.Tags;
+import main.Unreachable;
 
 /**
  * This is Marker,
@@ -25,38 +26,34 @@ public final class TextNode implements Node {
     }
 
     @Override
-    public Tags getTag() {
-        return Tags.TEXT;
+    public Struct getType() {
+        return Struct.Text;
     }
 
     @Override
-    public boolean canContain(Tags t) {
+    public boolean canContain(Struct type) {
         return false;
     }
 
+    @Unreachable
     @Override
     public Node appendChild(Node n) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Node appendChildren(Node... c) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Node appendChildren(Collection<Node> c) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public String toString() {
-        return inner();
+        return String.format("<TEXT>%s</TEXT>", inner());
     }
 
     @Override
     public TextNode appendText(String txt) {
         content.append(txt);
         return this;
+    }
+
+    @Override
+    public String toRendered() {
+        return inner();
     }
 }

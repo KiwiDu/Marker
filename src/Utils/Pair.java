@@ -15,8 +15,8 @@ public final class Pair<A, B> {
         this.second = second;
     }
 
-    public Pair of(A first, B second) {
-        return new Pair(first, second);
+    public static <A,B> Pair of(A first, B second) {
+        return new Pair<>(first, second);
     }
 
     @Override

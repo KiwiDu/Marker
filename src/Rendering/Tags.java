@@ -1,4 +1,4 @@
-package BasicNode;
+package Rendering;
 
 /**
  * This is Marker,
@@ -7,26 +7,27 @@ package BasicNode;
  */
 @SuppressWarnings("unused")
 public enum Tags {
-    //for special use
-    TEXT,
     //the parts of a document
     body,
     //the elements
     h1, h2, h3, h4, h5, h6,
     span, b, i, del,
     ul, ol, li,
-    blockqutoe, p,
+    blockqutoe, p,code,
     //divisors
     br(TYPE.EMPTY), hr(TYPE.EMPTY);
 
     TYPE type;
-    Tags(TYPE _type){
-        type=_type;
+
+    Tags(TYPE _type) {
+        type = _type;
     }
-    Tags(){
-        type=TYPE.NORMAL;
+
+    Tags() {
+        type = TYPE.NORMAL;
     }
-    enum TYPE{
-        EMPTY,NORMAL;
+
+    enum TYPE {
+        EMPTY, NORMAL;
     }
 }

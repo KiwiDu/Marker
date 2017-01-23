@@ -1,29 +1,35 @@
 package BasicNode;
 
-import java.util.Collection;
+import Rendering.Renderable;
+import main.Dicts;
+
+import java.util.Objects;
 
 /**
  * This is Marker,
  * which was created by kiwid on 2017/1/11.
  * All rights reserved.
  */
-public interface Node {
+public interface Node extends Renderable {
+
     @SuppressWarnings("unused")
-    static Node of(String id) {
-        throw new RuntimeException("No expected implementation was found", new NullPointerException());
+    static Node of(Struct type) {
+        Objects.requireNonNull(type);
+        try {
+            return Dicts.impl(type).getConstructor().newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        throw new RuntimeException(String.format("No expected implementation for %s was found", type));
     }
 
     String inner();
 
-    Tags getTag();
+    Struct getType();
 
-    boolean canContain(Tags t);
+    boolean canContain(Struct type);
 
     Node appendChild(Node n);
-
-    Node appendChildren(Node... c);
-
-    Node appendChildren(Collection<Node> c);
 
     Node appendText(String txt);
 }

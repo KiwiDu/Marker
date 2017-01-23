@@ -1,56 +1,55 @@
 package BasicNode;
 
+import Rendering.DefaultRenderEngine;
 import Utils.Index;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.function.Function;
 
 /**
  * This is Marker,
  * which was created by kiwid on 2017/1/11.
  * All rights reserved.
  */
-public class ParentNode implements Node {
+public abstract class ParentNode implements Node {
+    protected Struct type;
     private LinkedHashMap<Index, Node> children;
-    private Tags tag;
 
     {
         children = new LinkedHashMap<>(32, 0.9f);
     }
 
-    private ParentNode(Tags tag) {
-        this.tag = tag;
+    protected ParentNode(Struct type) {
+        this.type = type;
     }
 
-    public static ParentNode of(Tags tag) {
-        return new ParentNode(tag);
-    }
-
-    public static ParentNode of(String id) {
-        return of(Tags.valueOf(id));
-    }
-
-    public String inner() {
+    protected String rec(Function<Node,String> src){
         StringBuilder ret = new StringBuilder(64);
         for (Node n : children.values()) {
-            ret.append(n.toString());
+            ret.append(src.apply(n));
         }
         return ret.toString();
     }
 
-    @Override
-    public Tags getTag() {
-        return tag;
+    public String inner() {
+        return rec(Node::toString);
     }
 
     @Override
-    public boolean canContain(Tags t) {
-        return true;
+    public Struct getType() {
+        return type;
     }
 
+    protected abstract String getTemplate(int... info);
+
+    @Override
     public String toString() {
-        return String.format("<%1$s>%2$s</%1$s>", tag, inner());
+        return String.format(getTemplate(), type, inner());
+    }
+
+    @Override
+    public String toRendered(){
+        return String.format(getTemplate(), DefaultRenderEngine.getImpl(this),rec(Node::toRendered));
     }
 
     @Override
@@ -67,18 +66,6 @@ public class ParentNode implements Node {
     @Override
     public ParentNode appendChild(Node n) {
         children.put(Index.of(children.size()), n);
-        return this;
-    }
-
-    @Override
-    public ParentNode appendChildren(Collection<Node> c) {
-        c.forEach(this::appendChild);
-        return this;
-    }
-
-    @Override
-    public ParentNode appendChildren(Node... c) {
-        Arrays.stream(c).forEach(this::appendChild);
         return this;
     }
 }

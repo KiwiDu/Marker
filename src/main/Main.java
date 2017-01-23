@@ -1,5 +1,9 @@
 package main;
 
+import BasicNode.Node;
+import Rendering.DefaultRenderEngine;
+import Rendering.RenderEngine;
+
 import java.io.InputStream;
 import java.util.Scanner;
 
@@ -13,7 +17,10 @@ public class Main {
     private static int i = 0;
 
     private static void testStr(String s) {
-        System.out.println(Parser.instance.parse(s).toString());
+        Node parsed=Parser.instance.parse(s);
+        System.out.println(parsed.toString());
+        RenderEngine re=new DefaultRenderEngine();
+        System.out.println(re.accept(parsed).render());
         System.out.printf("------ %d ------\n\n", i++);
     }
 
